@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)8o#v(zz0z($86o-f0_!(-fga&sx&tftva0j32*ge$aq=e@%&8'
+SECRET_KEY = os.environ.get('DABEH_SECRET_KEY', 'django-insecure-#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost'ls]
 
 
 # Application definition
@@ -78,8 +79,12 @@ WSGI_APPLICATION = 'dabeh.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB', 'DABEH_DB'),
+        'USER': os.environ.get('POSTGRES_USER', 'DABED_DB_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'DABEH_DB_PASS'),
+        'HOST': 'DABEH_DB_HOST',
+        'PORT': 'DABEH_DB_PORT',
     }
 }
 

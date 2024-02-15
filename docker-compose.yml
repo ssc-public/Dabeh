@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    container_name: dabeh-db
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_DB: DABEH
+      POSTGRES_USER: DABEH
+      POSTGRES_PASSWORD: pass
+
+  web:
+    container_name: dabeh
+    build: .
+    restart: always
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+    environment:
+      - DABEH_DB=DABEH
+      - DABEH_DB_USER=DABEH
+      - DABEH_DB_PASSWORD=pass
+      - DABEH_DB_HOST=db
+      - DABEH_DB_PORT=5432
+      - DABEH_SECRET_KEY=""
